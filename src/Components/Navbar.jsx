@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 
 export default function Navbar() {
   return (
@@ -23,7 +24,10 @@ export default function Navbar() {
         <li><a>Item 3</a></li>
       </ul>
     </div>
-    <a className="btn btn-ghost text-xl">Task Matrix</a>
+   <Link to={"/"} className='flex items-center btn btn-ghost text-xl'>
+   <img className='object-cover w-[40px]' src="https://cdn-icons-png.flaticon.com/512/2098/2098402.png" alt="" />
+   <p className=""> Task Matrix</p>
+   </Link>
   </div>
   <div className="navbar-center hidden lg:flex">
     <ul className="menu menu-horizontal px-1">
