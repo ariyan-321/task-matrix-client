@@ -1,2 +1,12 @@
 @import "tailwindcss";
 @plugin "daisyui";
+
+
+body.dark {
+    background-color: #121212;
+    color: #e0e0e0;
+  }
+  
+body.dark .navbar {
+    background-color: #333;
+  }

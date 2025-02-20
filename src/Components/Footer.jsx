@@ -2,8 +2,8 @@ import React from "react";
 
 export default function Footer() {
   return (
-    <div className="mt-[60vh]">
-      <footer className="bg-gray-900 text-white p-10">
+    <div className="mt-[60vh] bg-gray-900 text-white ">
+      <footer className="bg-gray-900 text-white container mx-auto p-10">
         <div className="container mx-auto grid grid-cols-1 md:grid-cols-3 gap-8 text-center md:text-left">
           {/* TaskMatrix Info */}
           <div>
