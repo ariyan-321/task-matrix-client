@@ -2,7 +2,7 @@ import React from 'react'
 
 export default function Footer() {
   return (
-    <div>
+    <div className='mt-[60vh]'>
         <footer className="footer sm:footer-horizontal bg-neutral text-neutral-content p-10">
   <nav>
     <h6 className="footer-title">Services</h6>
