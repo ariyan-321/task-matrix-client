@@ -21,7 +21,6 @@ const slides = [
 
 export default function Home() {
   const { user } = useContext(authcontext);
-  console.log(user)
   const [currentSlide, setCurrentSlide] = useState(0);
 
   useEffect(() => {
