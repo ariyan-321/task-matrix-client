@@ -81,6 +81,11 @@ export default function Navbar() {
                   About
                 </Link>
               </li>
+              <li>
+                <Link to={"/contact"} className="hover:text-blue-400">
+                  Contact
+                </Link>
+              </li>
             </ul>
           </div>
           <Link
@@ -107,6 +112,12 @@ export default function Navbar() {
                 About
               </Link>
             </li>
+
+            <li>
+                <Link to={"/contact"} className="hover:text-blue-400">
+                  Contact
+                </Link>
+              </li>
           </ul>
         </div>
 
@@ -147,7 +158,7 @@ export default function Navbar() {
               </button>
             </div>
           ) : (
-            <div className="flex items-center gap-4J">
+            <div className="flex items-center gap-4">
               <button className="btn">Login</button>
 
               <button className="btn">Register</button>
