@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import { authcontext } from "../Provider/AuthProvider";
-
+import WhyChooseUs from "./WhyChooseUs";
+import GetStarted from "./GetStarted";
 const slides = [
   {
     id: 1,
@@ -59,8 +60,18 @@ export default function Home() {
             </div>
           ))}
         </div>
+       
+         
+        
       </div>
       }
+
+      <div className="mt-24  m-12">
+      <WhyChooseUs></WhyChooseUs>
+      </div>
+      <div className="mt-24  m-12">
+      <GetStarted></GetStarted>
+      </div>
     </div>
   );
 }
