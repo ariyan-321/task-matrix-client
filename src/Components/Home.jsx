@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { authcontext } from "../Provider/AuthProvider";
 import WhyChooseUs from "./WhyChooseUs";
 import GetStarted from "./GetStarted";
+
 const slides = [
   {
     id: 1,
@@ -34,44 +35,43 @@ export default function Home() {
 
   return (
     <div>
-      {
-        user?.email?<>
-        
-        <h1>data still not added</h1>
-        </>:<div className="relative w-[80%] mx-auto mt-12 h-[60vh] md:h-[70vh] overflow-hidden">
-        <div className="w-full h-full relative">
-          {slides.map((slide, index) => (
-            <div
-              key={slide.id}
-              className={`absolute inset-0 w-full h-full flex items-center justify-center transition-opacity duration-1000 ${
-                index === currentSlide ? "opacity-100 scale-100" : "opacity-0 scale-95"
-              }`}
-            >
-              <img
-                src={slide.img}
-                alt="TaskMatrix Slide"
-                className="w-full h-full object-cover rounded-lg opacity-[60%]"
-              />
-              <div className="absolute inset-0 bg-opacity-50 flex items-center justify-center">
-                <h2 className="text-2xl md:text-4xl text-center text-black font-bold px-6">
-                  {slide.text}
-                </h2>
-              </div>
+      {user?.email ? (
+        <>
+          <h1>data still not added</h1>
+        </>
+      ) : (
+        <>
+          <div className="relative w-[80%] mx-auto mt-12 h-[60vh] md:h-[70vh] overflow-hidden">
+            <div className="w-full h-full relative">
+              {slides.map((slide, index) => (
+                <div
+                  key={slide.id}
+                  className={`absolute inset-0 w-full h-full flex items-center justify-center transition-opacity duration-1000 ${
+                    index === currentSlide ? "opacity-100 scale-100" : "opacity-0 scale-95"
+                  }`}
+                >
+                  <img
+                    src={slide.img}
+                    alt="TaskMatrix Slide"
+                    className="w-full h-full object-cover rounded-lg opacity-[60%]"
+                  />
+                  <div className="absolute inset-0 bg-opacity-50 flex items-center justify-center">
+                    <h2 className="text-2xl md:text-4xl text-center text-black font-bold px-6">
+                      {slide.text}
+                    </h2>
+                  </div>
+                </div>
+              ))}
             </div>
-          ))}
-        </div>
-       
-         
-        
-      </div>
-      }
-
-      <div className="mt-24  m-12">
-      <WhyChooseUs></WhyChooseUs>
+          </div>
+          <div className="mt-24  m-12">
+          <WhyChooseUs></WhyChooseUs>
       </div>
       <div className="mt-24  m-12">
       <GetStarted></GetStarted>
       </div>
+        </>
+      )}
     </div>
   );
 }

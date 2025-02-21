@@ -7,7 +7,7 @@ import toast from "react-hot-toast";
 export default function Login() {
 
 
-    const{userLogin}=useContext(authcontext);
+    const{userLogin,googleLogin}=useContext(authcontext);
 
     const navigate=useNavigate();
 
@@ -29,6 +29,20 @@ export default function Login() {
         toast.error(err.code)
     })
   };
+
+
+  const handleGoogleLogin=()=>{
+    googleLogin()
+    .then(res=>{
+        console.log(res.user);
+        toast.success("Successfully logged in");
+        navigate("/")
+    })
+    .catch(error=>{
+        console.log(error.message)
+        toast.error(error.message)
+    })
+  }
 
   const togglePasswordVisibility = () => {
     setShowPassword((prevState) => !prevState);
@@ -86,7 +100,7 @@ export default function Login() {
           >
             Login
           </button>
-          <button className="w-full flex items-center  justify-center gap-7 my-7 px-6 py-3 bg-white cursor-pointer text-gray-900 text-lg font-semibold rounded-lg shadow-lg hover:bg-blue-300 transition"><FaGoogle></FaGoogle> Login With Google</button>
+          <button onClick={handleGoogleLogin} className="w-full flex items-center  justify-center gap-7 my-7 px-6 py-3 bg-white cursor-pointer text-gray-900 text-lg font-semibold rounded-lg shadow-lg hover:bg-blue-300 transition"><FaGoogle></FaGoogle> Login With Google</button>
           <p className="p-4">Don't have an account? <Link className="text-blue-400" to={"/register"}>Register</Link></p>
         </form>
         <div className="mt-6 text-center">
