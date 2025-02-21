@@ -1,10 +1,15 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { FaGoogle } from "react-icons/fa";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { authcontext } from "../Provider/AuthProvider";
+import toast from "react-hot-toast";
 
 export default function Register() {
+  const { createProfile,googleLogin } = useContext(authcontext);
+
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState("");
+  const navigate=useNavigate();
 
   const handleRegister = (e) => {
     e.preventDefault();
@@ -13,19 +18,41 @@ export default function Register() {
     const email = e.target.email.value;
     const password = e.target.password.value;
 
-    // Password must be at least 8 characters long and contain at least one letter and one number.
-    const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
-
+    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z]).{6,}$/;
     if (!passwordRegex.test(password)) {
       setError(
-        "Password must be at least 8 characters long and contain at least one letter and one number."
+        "Password must be at least 6 characters long and contain at least one letter and one number."
       );
       return;
     }
     setError("");
-    console.log("Registering:", { name, imageUrl, email, password });
-    // Add further registration logic here...
+
+    createProfile(email,password)
+    .then(res=>{
+        console.log(res.user)
+        toast.success("Register Success");
+        navigate("/")
+    })
+    .catch(err=>{
+        console.log(err.message);
+        toast.error(err.message)
+    })
   };
+
+
+  const handleGoogleLogin=()=>{
+    googleLogin()
+    .then(res=>{
+        console.log(res.user);
+        toast.success("Successfully logged in");
+        navigate("/")
+    })
+    .catch(error=>{
+        console.log(error.message)
+        toast.error(error.message)
+    })
+  }
+
 
   const togglePasswordVisibility = () => {
     setShowPassword((prevState) => !prevState);
@@ -112,11 +139,11 @@ export default function Register() {
           {error && <div className="mb-4 text-red-500 text-sm">{error}</div>}
           <button
             type="submit"
-            className="w-full px-6 py-3 bg-blue-400 text-gray-900 text-lg font-semibold rounded-lg shadow-lg hover:bg-blue-300 transition"
+            className="w-full cursor-pointer px-6 py-3 bg-blue-400 text-gray-900 text-lg font-semibold rounded-lg shadow-lg hover:bg-blue-300 transition"
           >
             Register
           </button>
-          <button className="w-full flex items-center  justify-center gap-7 my-7 px-6 py-3 bg-white cursor-pointer text-gray-900 text-lg font-semibold rounded-lg shadow-lg hover:bg-blue-300 transition">
+          <button onClick={handleGoogleLogin} className="w-full flex items-center  justify-center gap-7 my-7 px-6 py-3 bg-white cursor-pointer text-gray-900 text-lg font-semibold rounded-lg shadow-lg hover:bg-blue-300 transition">
             <FaGoogle></FaGoogle> Login With Google
           </button>
 

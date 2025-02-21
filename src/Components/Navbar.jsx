@@ -93,7 +93,7 @@ export default function Navbar() {
             className="flex items-center   btn btn-ghost text-xl text-blue-400"
           >
             <img
-              className="object-cover w-[40px] hidden md:visible"
+              className="object-cover w-[40px] hidden md:block"
               src="https://cdn-icons-png.flaticon.com/512/2098/2098402.png"
               alt="TaskMatrix Logo"
             />

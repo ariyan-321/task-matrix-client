@@ -18,7 +18,7 @@ export default function Login() {
     e.preventDefault();
     const email = e.target.email.value;
     const password = e.target.password.value;
-    userLogin()
+    userLogin(email,password)
     .then(res=> {
         console.log(res.user)
         toast.success("Login Successul");
