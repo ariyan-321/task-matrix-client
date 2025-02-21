@@ -6,13 +6,20 @@ import TaskCard from "../Components/subcomponents/TaskCard";
 export default function Tasks() {
   const [showModal, setShowModal] = useState(false);
   const [tasks, setTasks] = useState([]);
+  const[loading,setLoading]=useState(true)
 
   // Fetch tasks from backend
   useEffect(() => {
     axios
       .get("http://localhost:5000/tasks")
-      .then((res) => setTasks(res.data))
-      .catch((err) => console.log(err.message));
+      .then((res) => {
+        setTasks(res.data)
+        setLoading(false)
+      })
+      .catch((err) => {
+        console.log(err.message)
+        setLoading(false)
+      });
   }, []);
 
   // Handle Add Task
@@ -43,11 +50,16 @@ export default function Tasks() {
 
   return (
     <div>
+        {loading && (
+        <div className="text-center text-xl font-bold text-blue-500 my-5">
+          Loading tasks...
+        </div>
+      )}
       {/* Add Task Button */}
       <div className="flex justify-end m-12">
         <button
           onClick={() => setShowModal(true)}
-          className="bg-blue-400 text-white px-4 py-2 rounded-lg hover:bg-blue-500 transition"
+          className="bg-blue-400 cursor-pointer text-white px-4 py-2 rounded-lg hover:bg-blue-500 transition"
         >
           Add New Task
         </button>
@@ -63,11 +75,13 @@ export default function Tasks() {
           <div className="bg-gray-200 p-4 rounded-lg shadow-lg w-full text-center">
             <h2 className="text-lg font-bold mb-4">To Do</h2>
             <div className="space-y-4">
-              {tasks
-                .filter((task) => task.category === "toDO")
-                .map((task) => (
+            {tasks.filter((task) => task.category === "toDo").length > 0 ? (
+                tasks.filter((task) => task.category === "toDo").map((task) => (
                   <TaskCard key={task.timeStamp} {...task} />
-                ))}
+                ))
+              ) : (
+                <p className="text-red-500">No Data</p>
+              )}
             </div>
           </div>
 
@@ -75,11 +89,13 @@ export default function Tasks() {
           <div className="bg-gray-300 p-4 rounded-lg shadow-lg w-full text-center">
             <h2 className="text-lg font-bold mb-4">In Progress</h2>
             <div className="space-y-4">
-              {tasks
-                .filter((task) => task.category === "In Progress")
-                .map((task) => (
+            {tasks.filter((task) => task.category === "In Progress").length > 0 ? (
+                tasks.filter((task) => task.category === "In Progress").map((task) => (
                   <TaskCard key={task.timeStamp} {...task} />
-                ))}
+                ))
+              ) : (
+                <p className="text-red-500">No Data</p>
+              )}
             </div>
           </div>
 
@@ -87,11 +103,13 @@ export default function Tasks() {
           <div className="bg-gray-400 p-4 rounded-lg shadow-lg w-full text-center">
             <h2 className="text-lg font-bold mb-4">Done</h2>
             <div className="space-y-4">
-              {tasks
-                .filter((task) => task.category === "done")
-                .map((task) => (
+            {tasks.filter((task) => task.category === "done").length > 0 ? (
+                tasks.filter((task) => task.category === "done").map((task) => (
                   <TaskCard key={task.timeStamp} {...task} />
-                ))}
+                ))
+              ) : (
+                <p className="text-red-500">No Data</p>
+              )}
             </div>
           </div>
         </div>
