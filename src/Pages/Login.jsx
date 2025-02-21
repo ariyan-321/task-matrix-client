@@ -3,11 +3,12 @@ import { FaGoogle } from "react-icons/fa";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { authcontext } from "../Provider/AuthProvider";
 import toast from "react-hot-toast";
+import axios from "axios";
 
 export default function Login() {
 
 
-    const{userLogin,googleLogin}=useContext(authcontext);
+    const{user,userLogin,googleLogin}=useContext(authcontext);
 
     const location=useLocation();
 
@@ -33,18 +34,28 @@ export default function Login() {
   };
 
 
-  const handleGoogleLogin=()=>{
-    googleLogin()
-    .then(res=>{
-        console.log(res.user);
-        toast.success("Successfully logged in");
-        navigate(location?.state ? location.state : "/");
-    })
-    .catch(error=>{
-        console.log(error.message)
-        toast.error(error.message)
-    })
-  }
+  const handleGoogleLogin = async () => {
+    try {
+      const res = await googleLogin(); // Use await directly for googleLogin
+      const email = res.user?.email;
+      const name = res.user?.displayName;
+
+      if (email) {
+        const userInfo = {
+          name,
+          email,
+        };
+
+        const response = await axios.post("http://localhost:5000/users", { userInfo });
+        console.log(response.data);
+        navigate(location?.state ? location.state : "/");        toast.success("Signup Successful");
+      }
+    } catch (err) {
+      console.log(err);
+      toast.error(err?.message || "Google signup failed");
+    }
+  };
+
 
   const togglePasswordVisibility = () => {
     setShowPassword((prevState) => !prevState);

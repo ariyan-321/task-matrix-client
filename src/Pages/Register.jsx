@@ -3,62 +3,81 @@ import { FaGoogle } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
 import { authcontext } from "../Provider/AuthProvider";
 import toast from "react-hot-toast";
+import axios from "axios";
 
 export default function Register() {
-  const { createProfile,googleLogin,updateUserProfile } = useContext(authcontext);
+  const { createProfile, googleLogin, updateUserProfile } =
+    useContext(authcontext);
 
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState("");
-  const navigate=useNavigate();
+  const navigate = useNavigate();
 
-  const handleRegister = (e) => {
+  const handleRegister = async (e) => {
     e.preventDefault();
+    
     const name = e.target.name.value;
     const imageUrl = e.target.imageUrl.value;
     const email = e.target.email.value;
     const password = e.target.password.value;
-
-    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z]).{6,}$/;
+  
+    const userInfo = { email, name };
+  
+    // Corrected password regex: Now requires a number
+    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{6,}$/;
     if (!passwordRegex.test(password)) {
       setError(
-        "Password must be at least 6 characters long and contain at least one letter and one number."
+        "Password must be at least 6 characters long and contain at least one uppercase letter, one lowercase letter, and one number."
       );
       return;
     }
-    setError("");
-
-    createProfile(email,password)
-    .then(res=>{
-        updateUserProfile({displayName:name,photoURL:imageUrl})
-        .then(()=>{
-            toast.success("Registration Success")
-            navigate("/")
-        })
-        .catch(err=>{
-            console.log(err.message);
-            toast.error(err.message)
-        })
-    })
-    .catch(err=>{
-        console.log(err.message);
-        toast.error(err.message)
-    })
+  
+    try {
+      setError("");
+  
+      const res = await createProfile(email, password);
+  
+      await updateUserProfile({ displayName: name, photoURL: imageUrl });
+  
+      toast.success("Registration Successful");
+  
+      // Ensure axios.post is awaited
+      const response = await axios.post("http://localhost:5000/users",{ userInfo});
+  
+      console.log(response.data);
+      navigate("/");
+      
+    } catch (err) {
+      console.log(err.message);
+      toast.error(err.message);
+    }
   };
+  
 
+  const handleGoogleLogin = async () => {
+    try {
+      const res = await googleLogin(); // Use await directly for googleLogin
+      const email = res.user?.email;
+      const name = res.user?.displayName;
 
-  const handleGoogleLogin=()=>{
-    googleLogin()
-    .then(res=>{
-        console.log(res.user);
-        toast.success("Successfully logged in");
-        navigate("/")
-    })
-    .catch(error=>{
-        console.log(error.message)
-        toast.error(error.message)
-    })
-  }
+      if (email) {
+        const userInfo = {
+          name,
+          email,
+        };
 
+        const response = await axios.post("http://localhost:5000/users", {
+          userInfo,
+        });
+        console.log(response.data);
+        navigate(location?.state ? location.state : "/");
+        toast.success("Signup Successful");
+      }
+    } catch (err) {
+      console.log(err);
+      toast.error(err?.message || "Google signup failed");
+    }
+  };
 
   const togglePasswordVisibility = () => {
     setShowPassword((prevState) => !prevState);
@@ -149,7 +168,10 @@ export default function Register() {
           >
             Register
           </button>
-          <button onClick={handleGoogleLogin} className="w-full flex items-center  justify-center gap-7 my-7 px-6 py-3 bg-white cursor-pointer text-gray-900 text-lg font-semibold rounded-lg shadow-lg hover:bg-blue-300 transition">
+          <button
+            onClick={handleGoogleLogin}
+            className="w-full flex items-center  justify-center gap-7 my-7 px-6 py-3 bg-white cursor-pointer text-gray-900 text-lg font-semibold rounded-lg shadow-lg hover:bg-blue-300 transition"
+          >
             <FaGoogle></FaGoogle> Login With Google
           </button>
 
