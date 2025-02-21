@@ -1,4 +1,6 @@
+import axios from "axios";
 import React, { useState } from "react";
+import toast from "react-hot-toast";
 
 export default function Tasks() {
   const [showModal, setShowModal] = useState(false);
@@ -7,14 +9,27 @@ export default function Tasks() {
     e.preventDefault();
     const title = e.target.title.value;
     const description = e.target.description.value;
+    const category = "In Progress";
+    const timeStamp = Date.now();
 
-    // Handle adding the task here
-    console.log("Task Title:", title);
-    console.log("Task Description:", description);
+    const addData = { title, description, timeStamp, category };
+
+    axios.post("http://localhost:5000/tasks",addData)
+    .then(res=>{
+        if(res.data.insertedId){
+            toast.success("Task added Successfully");
+            console.log(res.data);
+            e.target.reset();
+            setShowModal(false);
+        }
+    })
+    .catch(err=>{
+        console.log(err.message)
+        toast.error(err.message)
+    })
 
     // Reset the form and close modal
-    e.target.reset();
-    setShowModal(false);
+   
   };
 
   return (
