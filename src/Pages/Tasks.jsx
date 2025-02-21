@@ -176,7 +176,7 @@ export default function Tasks() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 my-5 w-[90%] mx-auto">
           {/* To Do Column */}
           <div
-            className="p-4 rounded-lg shadow-lg text-center bg-gray-100"
+            className="p-4 rounded-lg shadow-lg text-center "
             onDragOver={handleDragOver}
             onDrop={(e) => handleDrop(e, "toDo")}
           >
@@ -198,7 +198,7 @@ export default function Tasks() {
 
           {/* In Progress Column */}
           <div
-            className="p-4 rounded-lg shadow-lg text-center bg-gray-100"
+            className="p-4 rounded-lg shadow-lg text-center"
             onDragOver={handleDragOver}
             onDrop={(e) => handleDrop(e, "inProgress")}
           >
@@ -220,7 +220,7 @@ export default function Tasks() {
 
           {/* Done Column */}
           <div
-            className="p-4 rounded-lg shadow-lg text-center bg-gray-100"
+            className="p-4 rounded-lg shadow-lg text-center "
             onDragOver={handleDragOver}
             onDrop={(e) => handleDrop(e, "done")}
           >
