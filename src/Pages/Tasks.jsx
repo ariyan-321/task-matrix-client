@@ -1,26 +1,20 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import toast from "react-hot-toast";
 import TaskCard from "../Components/subcomponents/TaskCard";
+import { useQuery } from "@tanstack/react-query";
 
 export default function Tasks() {
   const [showModal, setShowModal] = useState(false);
-  const [tasks, setTasks] = useState([]);
-  const[loading,setLoading]=useState(true)
 
-  // Fetch tasks from backend
-  useEffect(() => {
-    axios
-      .get("http://localhost:5000/tasks")
-      .then((res) => {
-        setTasks(res.data)
-        setLoading(false)
-      })
-      .catch((err) => {
-        console.log(err.message)
-        setLoading(false)
-      });
-  }, []);
+  // Fetch tasks from backend using React Query
+  const { data: tasks, isLoading, error ,refetch} = useQuery({
+    queryKey: ["tasks"],
+    queryFn: async () => {
+      const { data } = await axios.get("http://localhost:5000/tasks");
+      return data;
+    },
+  });
 
   // Handle Add Task
   const handleAddTask = (e) => {
@@ -37,9 +31,9 @@ export default function Tasks() {
       .then((res) => {
         if (res.data.insertedId) {
           toast.success("Task added successfully!");
-          setTasks([...tasks, newTask]); // Update UI
           e.target.reset();
           setShowModal(false);
+          refetch();
         }
       })
       .catch((err) => {
@@ -48,13 +42,24 @@ export default function Tasks() {
       });
   };
 
+  if (isLoading) {
+    return (
+      <div className="text-center text-xl font-bold text-blue-500 my-5">
+        Loading tasks...
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="text-center text-xl font-bold text-red-500 my-5">
+        Error loading tasks: {error.message}
+      </div>
+    );
+  }
+
   return (
     <div>
-        {loading && (
-        <div className="text-center text-xl font-bold text-blue-500 my-5">
-          Loading tasks...
-        </div>
-      )}
       {/* Add Task Button */}
       <div className="flex justify-end m-12">
         <button
@@ -67,18 +72,16 @@ export default function Tasks() {
 
       {/* Task Categories */}
       <div className="mt-12">
-        <p className="text-center font-semibold text-xl">
-          Manage Your Tasks Here
-        </p>
+        <p className="text-center font-semibold text-xl">Manage Your Tasks Here</p>
         <div className="grid my-5 w-[90%] mx-auto justify-items-center grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
           {/* To Do */}
-          <div className="bg-gray-200 p-4 rounded-lg shadow-lg w-full text-center">
+          <div className=" p-4 rounded-lg shadow-lg w-full text-center">
             <h2 className="text-lg font-bold mb-4">To Do</h2>
             <div className="space-y-4">
-            {tasks.filter((task) => task.category === "toDo").length > 0 ? (
-                tasks.filter((task) => task.category === "toDo").map((task) => (
-                  <TaskCard key={task.timeStamp} {...task} />
-                ))
+              {tasks.filter((task) => task.category === "toDo").length > 0 ? (
+                tasks
+                  .filter((task) => task.category === "toDo")
+                  .map((task) => <TaskCard key={task.timeStamp} refetch={refetch} {...task} />)
               ) : (
                 <p className="text-red-500">No Data</p>
               )}
@@ -86,13 +89,13 @@ export default function Tasks() {
           </div>
 
           {/* In Progress */}
-          <div className="bg-gray-300 p-4 rounded-lg shadow-lg w-full text-center">
+          <div className=" p-4 rounded-lg shadow-lg w-full text-center">
             <h2 className="text-lg font-bold mb-4">In Progress</h2>
             <div className="space-y-4">
-            {tasks.filter((task) => task.category === "In Progress").length > 0 ? (
-                tasks.filter((task) => task.category === "In Progress").map((task) => (
-                  <TaskCard key={task.timeStamp} {...task} />
-                ))
+              {tasks.filter((task) => task.category === "In Progress").length > 0 ? (
+                tasks
+                  .filter((task) => task.category === "In Progress")
+                  .map((task) => <TaskCard key={task.timeStamp} refetch={refetch} {...task} />)
               ) : (
                 <p className="text-red-500">No Data</p>
               )}
@@ -100,13 +103,13 @@ export default function Tasks() {
           </div>
 
           {/* Done */}
-          <div className="bg-gray-400 p-4 rounded-lg shadow-lg w-full text-center">
+          <div className=" p-4 rounded-lg shadow-lg w-full text-center">
             <h2 className="text-lg font-bold mb-4">Done</h2>
             <div className="space-y-4">
-            {tasks.filter((task) => task.category === "done").length > 0 ? (
-                tasks.filter((task) => task.category === "done").map((task) => (
-                  <TaskCard key={task.timeStamp} {...task} />
-                ))
+              {tasks.filter((task) => task.category === "done").length > 0 ? (
+                tasks
+                  .filter((task) => task.category === "done")
+                  .map((task) => <TaskCard key={task.timeStamp} refetch={refetch} {...task} />)
               ) : (
                 <p className="text-red-500">No Data</p>
               )}
