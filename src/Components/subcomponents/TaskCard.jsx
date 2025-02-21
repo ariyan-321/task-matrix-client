@@ -1,15 +1,12 @@
-import axios from "axios";
-import React, { useState } from "react";
-import toast from "react-hot-toast";
+import React from "react";
 import { FaEdit, FaTrash } from "react-icons/fa";
 import { Link } from "react-router-dom";
+import axios from "axios";
+import toast from "react-hot-toast";
 import Swal from "sweetalert2";
 
-export default function TaskCard(data) {
-  const { _id, title, refetch, description, timeStamp, category } = data;
-  const [editTitle, setEditTitle] = useState(title);
-  const [editDescription, setEditDescription] = useState(description);
-  const [editCategory, setEditCategory] = useState(category);
+export default function TaskCard({ task, onDragStart, index, refetch }) {
+  const { _id, title, description, timeStamp, category } = task;
 
   const handleDelete = (id) => {
     Swal.fire({
@@ -19,40 +16,38 @@ export default function TaskCard(data) {
       showCancelButton: true,
       confirmButtonColor: "#3085d6",
       cancelButtonColor: "#d33",
-      confirmButtonText: "Yes, delete it!"
+      confirmButtonText: "Yes, delete it!",
     }).then((result) => {
       if (result.isConfirmed) {
         axios
           .delete(`http://localhost:5000/tasks/${id}`)
           .then((res) => {
             if (res.data.deletedCount > 0) {
-              refetch();
-              Swal.fire({
-                title: "Deleted!",
-                text: "Your task has been deleted.",
-                icon: "success"
-              });
+              refetch && refetch();
+              Swal.fire("Deleted!", "Your task has been deleted.", "success");
             }
           })
           .catch((err) => {
+            console.error(err.message);
             toast.error(err.message);
-            console.log(err.message);
           });
       }
     });
   };
 
- 
-
   return (
-    <div className="bg-gray-800 text-white p-6 rounded-lg shadow-lg transition-transform transform hover:scale-105 hover:shadow-xl">
-      <h2 className="text-2xl font-semibold text-blue-400">{title}</h2>
+    <div
+      className="bg-gray-800 text-white p-4 rounded-lg shadow-lg mb-2 cursor-move"
+      draggable="true"
+      onDragStart={onDragStart}
+    >
+      <h2 className="text-xl font-bold text-blue-400">{title}</h2>
       <p className="mt-2 text-gray-300">{description}</p>
-      <p className="mt-4 text-sm text-gray-400">
+      <p className="mt-2 text-sm text-gray-400">
         {new Date(timeStamp).toLocaleString()}
       </p>
       <span
-        className={`inline-block mt-3 px-4 py-2 text-sm font-semibold rounded-lg ${
+        className={`inline-block mt-2 px-3 py-1 text-sm font-semibold rounded ${
           category === "In Progress"
             ? "bg-yellow-500 text-gray-900"
             : category === "done"
@@ -62,7 +57,7 @@ export default function TaskCard(data) {
       >
         {category}
       </span>
-      <div className="flex justify-between">
+      <div className="flex justify-between mt-4">
         <Link to={`/tasks/${_id}`} className="btn">
           <FaEdit />
         </Link>
@@ -70,9 +65,6 @@ export default function TaskCard(data) {
           <FaTrash />
         </button>
       </div>
-
-
-
     </div>
   );
 }

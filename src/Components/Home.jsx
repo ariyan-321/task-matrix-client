@@ -49,7 +49,7 @@ export default function Home() {
          />
        </div>
        <div className="flex justify-center items-center mt-7">
-       <Link to={"/tasks"} className="btn bg-blue-400">Click To Manage Tasks</Link>
+       <Link to={"/tasks"} className="btn bg-blue-400">Click Here To Manage Tasks</Link>
        </div>
      </div>
      
