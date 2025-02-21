@@ -36,9 +36,12 @@ export default function Home() {
   return (
     <div>
       {user?.email ? (
-        <>
-          <h1>data still not added</h1>
-        </>
+        <div>
+          <h1 className="font-semibold text-3xl my-2 text-center">
+            Welcome,{user?.displayName}
+          </h1>
+         
+        </div>
       ) : (
         <>
           <div className="relative w-[80%] mx-auto mt-12 h-[60vh] md:h-[70vh] overflow-hidden">
@@ -47,7 +50,9 @@ export default function Home() {
                 <div
                   key={slide.id}
                   className={`absolute inset-0 w-full h-full flex items-center justify-center transition-opacity duration-1000 ${
-                    index === currentSlide ? "opacity-100 scale-100" : "opacity-0 scale-95"
+                    index === currentSlide
+                      ? "opacity-100 scale-100"
+                      : "opacity-0 scale-95"
                   }`}
                 >
                   <img
@@ -65,11 +70,11 @@ export default function Home() {
             </div>
           </div>
           <div className="mt-24  m-12">
-          <WhyChooseUs></WhyChooseUs>
-      </div>
-      <div className="mt-24  m-12">
-      <GetStarted></GetStarted>
-      </div>
+            <WhyChooseUs></WhyChooseUs>
+          </div>
+          <div className="mt-24  m-12">
+            <GetStarted></GetStarted>
+          </div>
         </>
       )}
     </div>

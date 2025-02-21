@@ -5,7 +5,7 @@ import { authcontext } from "../Provider/AuthProvider";
 import toast from "react-hot-toast";
 
 export default function Register() {
-  const { createProfile,googleLogin } = useContext(authcontext);
+  const { createProfile,googleLogin,updateUserProfile } = useContext(authcontext);
 
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState("");
@@ -29,9 +29,15 @@ export default function Register() {
 
     createProfile(email,password)
     .then(res=>{
-        console.log(res.user)
-        toast.success("Register Success");
-        navigate("/")
+        updateUserProfile({displayName:name,photoURL:imageUrl})
+        .then(()=>{
+            toast.success("Registration Success")
+            navigate("/")
+        })
+        .catch(err=>{
+            console.log(err.message);
+            toast.error(err.message)
+        })
     })
     .catch(err=>{
         console.log(err.message);

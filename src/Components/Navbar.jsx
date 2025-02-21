@@ -1,7 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { authcontext } from "../Provider/AuthProvider";
-import toast from "react-hot-toast";
 
 export default function Navbar() {
   // State to manage dark mode
@@ -77,6 +76,11 @@ export default function Navbar() {
                 </Link>
               </li>
               <li>
+                <Link to={"/tasks"} className="hover:text-blue-400">
+                  Tasks
+                </Link>
+              </li>
+              <li>
                 <Link to={"/about"} className="hover:text-blue-400">
                   About
                 </Link>
@@ -107,6 +111,11 @@ export default function Navbar() {
                 Home
               </Link>
             </li>
+            <li>
+                <Link to={"/tasks"} className="hover:text-blue-400">
+                  Tasks
+                </Link>
+              </li>
             <li>
               <Link to={"/about"} className="hover:text-blue-400">
                 About

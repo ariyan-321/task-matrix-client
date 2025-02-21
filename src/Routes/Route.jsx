@@ -7,6 +7,7 @@ import Contact from '../Pages/Contact'
 import Login from '../Pages/Login'
 import Register from '../Pages/Register'
 import ErrorPage from '../Pages/ErrorPage'
+import Tasks from '../Pages/Tasks'
 
 const router=createBrowserRouter([
     {
@@ -25,6 +26,10 @@ const router=createBrowserRouter([
             {
                 path:"/contact",
                 element:<Contact></Contact>
+            },
+            {
+                path:"/tasks",
+                element:<Tasks></Tasks>
             }
         ]
     },
