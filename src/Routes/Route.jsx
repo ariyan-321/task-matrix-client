@@ -8,6 +8,7 @@ import Login from '../Pages/Login'
 import Register from '../Pages/Register'
 import ErrorPage from '../Pages/ErrorPage'
 import Tasks from '../Pages/Tasks'
+import TaskUpdate from '../Components/subcomponents/TaskUpdate'
 
 const router=createBrowserRouter([
     {
@@ -30,6 +31,10 @@ const router=createBrowserRouter([
             {
                 path:"/tasks",
                 element:<Tasks></Tasks>
+            },
+            {
+                path:"/tasks/:id",
+                element:<TaskUpdate></TaskUpdate>
             }
         ]
     },

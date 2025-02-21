@@ -1,11 +1,15 @@
 import axios from "axios";
-import React from "react";
+import React, { useState } from "react";
 import toast from "react-hot-toast";
 import { FaEdit, FaTrash } from "react-icons/fa";
+import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
 
 export default function TaskCard(data) {
-  const { _id, title,refetch, description, timeStamp, category } = data;
+  const { _id, title, refetch, description, timeStamp, category } = data;
+  const [editTitle, setEditTitle] = useState(title);
+  const [editDescription, setEditDescription] = useState(description);
+  const [editCategory, setEditCategory] = useState(category);
 
   const handleDelete = (id) => {
     Swal.fire({
@@ -19,17 +23,15 @@ export default function TaskCard(data) {
     }).then((result) => {
       if (result.isConfirmed) {
         axios
-          .delete(`http://localhost:5000/tasks/${id}`) // ✅ Fixed backticks
+          .delete(`http://localhost:5000/tasks/${id}`)
           .then((res) => {
-            if (res.data.deletedCount > 0) { // ✅ Check if deletion was successful
-              refetch()
-                Swal.fire({
+            if (res.data.deletedCount > 0) {
+              refetch();
+              Swal.fire({
                 title: "Deleted!",
                 text: "Your task has been deleted.",
                 icon: "success"
-                
               });
-              
             }
           })
           .catch((err) => {
@@ -39,7 +41,8 @@ export default function TaskCard(data) {
       }
     });
   };
-  
+
+ 
 
   return (
     <div className="bg-gray-800 text-white p-6 rounded-lg shadow-lg transition-transform transform hover:scale-105 hover:shadow-xl">
@@ -59,14 +62,17 @@ export default function TaskCard(data) {
       >
         {category}
       </span>
-      <div className="flex justify-between ">
-        <button className="btn">
-          <FaEdit></FaEdit>
-        </button>
+      <div className="flex justify-between">
+        <Link to={`/tasks/${_id}`} className="btn">
+          <FaEdit />
+        </Link>
         <button onClick={() => handleDelete(_id)} className="btn">
-          <FaTrash></FaTrash>
+          <FaTrash />
         </button>
       </div>
+
+
+
     </div>
   );
 }
