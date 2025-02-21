@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { FaGoogle } from "react-icons/fa";
 import { Link } from "react-router-dom";
 
 export default function Register() {
@@ -115,6 +116,16 @@ export default function Register() {
           >
             Register
           </button>
+          <button className="w-full flex items-center  justify-center gap-7 my-7 px-6 py-3 bg-white cursor-pointer text-gray-900 text-lg font-semibold rounded-lg shadow-lg hover:bg-blue-300 transition">
+            <FaGoogle></FaGoogle> Login With Google
+          </button>
+
+          <p className="p-4">
+            Already have an account?{" "}
+            <Link className="text-blue-400" to={"/login"}>
+              Login
+            </Link>
+          </p>
         </form>
         <div className="mt-6 text-center">
           <Link
