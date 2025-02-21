@@ -58,12 +58,12 @@ export default function TaskUpdate() {
   }
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 p-4">
-      <div className="bg-white rounded-lg shadow-md w-full max-w-lg p-6">
+    <div className="flex flex-col items-center justify-center min-h-screen p-4">
+      <div className=" rounded-lg shadow-md w-full max-w-lg p-6">
         <h2 className="text-2xl font-semibold text-center mb-6">Update Task</h2>
         <form onSubmit={handleUpdate}>
           <div className="mb-4">
-            <label htmlFor="title" className="block text-sm font-medium text-gray-700">
+            <label htmlFor="title" className="block text-sm font-medium">
               Title
             </label>
             <input
@@ -76,7 +76,7 @@ export default function TaskUpdate() {
             />
           </div>
           <div className="mb-4">
-            <label htmlFor="description" className="block text-sm font-medium text-gray-700">
+            <label htmlFor="description" className="block text-sm font-medium ">
               Description
             </label>
             <textarea
@@ -89,14 +89,14 @@ export default function TaskUpdate() {
             ></textarea>
           </div>
           <div className="mb-4">
-            <label htmlFor="category" className="block text-sm font-medium text-gray-700">
+            <label htmlFor="category" className="block text-sm font-medium ">
               Category
             </label>
             <select
               name="category"
               id="category"
               defaultValue={task.category}
-              className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+              className="mt-1 block w-full  px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
               required
             >
               <option value="toDo">To Do</option>
