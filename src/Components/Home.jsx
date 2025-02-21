@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { authcontext } from "../Provider/AuthProvider";
 import WhyChooseUs from "./WhyChooseUs";
 import GetStarted from "./GetStarted";
+import { Link } from "react-router-dom";
 
 const slides = [
   {
@@ -36,12 +37,22 @@ export default function Home() {
   return (
     <div>
       {user?.email ? (
-        <div>
-          <h1 className="font-semibold text-3xl my-2 text-center">
-            Welcome,{user?.displayName}
-          </h1>
-         
-        </div>
+       <div className="flex flex-col items-center p-4">
+       <h1 className="font-semibold text-3xl mt-12 text-center">
+         Welcome, {user?.displayName}
+       </h1>
+       <div className="mt-6 border-4 border-blue-400 rounded-full overflow-hidden w-40 h-40 sm:w-48 sm:h-48 md:w-56 md:h-56">
+         <img
+           className="object-cover w-full h-full"
+           src={user?.photoURL}
+           alt="User Profile"
+         />
+       </div>
+       <div className="flex justify-center items-center mt-7">
+       <Link to={"/tasks"} className="btn bg-blue-400">Click To Manage Tasks</Link>
+       </div>
+     </div>
+     
       ) : (
         <>
           <div className="relative w-[80%] mx-auto mt-12 h-[60vh] md:h-[70vh] overflow-hidden">
