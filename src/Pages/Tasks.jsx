@@ -1,17 +1,21 @@
 import axios from "axios";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import toast from "react-hot-toast";
 import TaskCard from "../Components/subcomponents/TaskCard";
 import { useQuery } from "@tanstack/react-query";
+import { authcontext } from "../Provider/AuthProvider";
 
 export default function Tasks() {
   const [showModal, setShowModal] = useState(false);
+
+
+  const{user}=useContext(authcontext);
 
   // Fetch tasks from backend using React Query
   const { data: tasks, isLoading, error ,refetch} = useQuery({
     queryKey: ["tasks"],
     queryFn: async () => {
-      const { data } = await axios.get("http://localhost:5000/tasks");
+      const { data } = await axios.get(`http://localhost:5000/task-user/${user?.email}`);
       return data;
     },
   });
@@ -23,8 +27,9 @@ export default function Tasks() {
     const description = e.target.description.value;
     const category = "toDo";
     const timeStamp = Date.now();
+    const email=user?.email;
 
-    const newTask = { title, description, timeStamp, category };
+    const newTask = { title, description, timeStamp, category ,email};
 
     axios
       .post("http://localhost:5000/tasks", newTask)
