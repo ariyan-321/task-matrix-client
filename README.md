@@ -7,7 +7,7 @@
 🚀 **Stay organized. Boost productivity.**  
 
 ## 🌐 Live Demo  
-🔗 [Task Matrix Live Site](https://task-matrix-ariyan.netlify.app/tasks)  
+🔗 [Task Matrix Live Site](https://task-matrix-ariyan.netlify.app/)  
 
 ---
 
