@@ -1,8 +1,56 @@
-# React + Vite
+Task Matrix
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Task Matrix is a task management application that allows users to create, update, and manage their tasks efficiently.
 
-Currently, two official plugins are available:
+🌐 Live Demo
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Task Matrix Live Site
+
+📦 Dependencies
+
+Express.js
+
+MongoDB
+
+Cors
+
+Dotenv
+
+Vercel (for deployment)
+
+🛠️ Installation Steps
+
+Clone the Repository
+
+git clone https://github.com/ariyan-321/task-matrix-client.git
+cd task-matrix
+
+Install Dependencies
+
+npm install
+
+Set Up Environment Variables
+Create a .env file and add:
+
+MONGO_USER=your_mongo_user
+MONGO_PASS=your_mongo_password
+PORT=5000
+
+Run the Server
+
+node index.js
+
+🚀 Technologies Used
+
+Frontend: React, Tailwind CSS
+
+Backend: Node.js, Express.js, MongoDB
+
+Database: MongoDB
+
+Authentication: Firebase
+
+Deployment: Netlify (Frontend), Vercel (Backend)
+
+👨‍💻 Developed by Ariyan Haque
+

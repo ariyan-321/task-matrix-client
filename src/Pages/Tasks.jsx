@@ -163,7 +163,7 @@ export default function Tasks() {
       <div className="flex justify-end m-12">
         <button
           onClick={() => setShowModal(true)}
-          className="bg-blue-400 text-white px-4 py-2 rounded-lg hover:bg-blue-500 transition"
+          className="bg-blue-400 cursor-pointer text-white px-4 py-2 rounded-lg hover:bg-blue-500 transition"
         >
           Add New Task
         </button>
@@ -292,7 +292,7 @@ export default function Tasks() {
                 </button>
                 <button
                   type="submit"
-                  className="px-4 py-2 bg-blue-400 text-gray-900 font-semibold rounded"
+                  className="px-4 py-2 cursor-pointer bg-blue-400 text-gray-900 font-semibold rounded"
                 >
                   Add Task
                 </button>
