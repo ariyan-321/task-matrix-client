@@ -42,7 +42,7 @@ export default function Register() {
       toast.success("Registration Successful");
   
       // Ensure axios.post is awaited
-      const response = await axios.post("http://localhost:5000/users",{ userInfo});
+      const response = await axios.post("https://task-matrix-two.vercel.app/users",{ userInfo});
   
       console.log(response.data);
       navigate("/");
@@ -66,7 +66,7 @@ export default function Register() {
           email,
         };
 
-        const response = await axios.post("http://localhost:5000/users", {
+        const response = await axios.post("https://task-matrix-two.vercel.app/users", {
           userInfo,
         });
         console.log(response.data);

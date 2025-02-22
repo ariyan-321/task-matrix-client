@@ -26,7 +26,7 @@ export default function Tasks() {
     queryKey: ["tasks"],
     queryFn: async () => {
       const { data } = await axios.get(
-        `http://localhost:5000/task-user/${user?.email}`
+        `https://task-matrix-two.vercel.app/task-user/${user?.email}`
       );
       return data;
     },
@@ -56,7 +56,7 @@ export default function Tasks() {
     const newTask = { title, description, timeStamp, category, email };
 
     axios
-      .post("http://localhost:5000/tasks", newTask)
+      .post("https://task-matrix-two.vercel.app/tasks", newTask)
       .then((res) => {
         if (res.data.insertedId) {
           toast.success("Task added successfully!");
@@ -124,7 +124,7 @@ export default function Tasks() {
 
     // Optionally, update the backend with the new category or order if needed.
     axios
-      .patch(`http://localhost:5000/tasks/${taskId}`, {
+      .patch(`https://task-matrix-two.vercel.app/tasks/${taskId}`, {
         category:
           destinationColumn === "toDo"
             ? "toDo"

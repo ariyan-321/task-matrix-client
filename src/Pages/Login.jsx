@@ -46,7 +46,7 @@ export default function Login() {
           email,
         };
 
-        const response = await axios.post("http://localhost:5000/users", { userInfo });
+        const response = await axios.post("https://task-matrix-two.vercel.app/users", { userInfo });
         console.log(response.data);
         navigate(location?.state ? location.state : "/");        toast.success("Signup Successful");
       }

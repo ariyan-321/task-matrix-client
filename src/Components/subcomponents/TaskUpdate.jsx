@@ -12,7 +12,7 @@ export default function TaskUpdate() {
   const { data: task, isLoading, error, refetch } = useQuery({
     queryKey: ['task', id],
     queryFn: async () => {
-      const { data } = await axios.get(`http://localhost:5000/tasks/${id}`);
+      const { data } = await axios.get(`https://task-matrix-two.vercel.app/tasks/${id}`);
       return data;
     },
   });
@@ -28,7 +28,7 @@ export default function TaskUpdate() {
     const updatedTask = { title, description, category };
 
     try {
-      const { data } = await axios.put(`http://localhost:5000/tasks/${id}`, {updatedTask});
+      const { data } = await axios.put(`https://task-matrix-two.vercel.app/tasks/${id}`, {updatedTask});
       if (data.modifiedCount > 0) {
         toast.success('Task updated successfully!');
         refetch();

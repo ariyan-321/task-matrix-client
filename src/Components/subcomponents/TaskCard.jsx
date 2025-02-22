@@ -20,7 +20,7 @@ export default function TaskCard({ task, onDragStart, index, refetch }) {
     }).then((result) => {
       if (result.isConfirmed) {
         axios
-          .delete(`http://localhost:5000/tasks/${id}`)
+          .delete(`https://task-matrix-two.vercel.app/tasks/${id}`)
           .then((res) => {
             if (res.data.deletedCount > 0) {
               refetch && refetch();
